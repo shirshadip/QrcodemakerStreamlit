@@ -4,110 +4,117 @@ import qr_functions as qr
 st.title("QR Code Generator")
 
 file_name = st.text_input("Enter file name for QR code")
-
+tab1, tab2, tab3, tab4 = st.tabs([
+    "Text QR",
+    "UPI QR",
+    "Phone QR",
+    "WhatsApp QR"
+])
 ########################################################
 # TEXT QR
+with tab1:
+    st.markdown("### Generate Text / URL QR Code")
 
-st.markdown("### Generate Text / URL QR Code")
+    text = st.text_input("Enter text or URL")
 
-text = st.text_input("Enter text or URL")
+    if st.button("Generate Text QR"):
 
-if st.button("Generate Text QR"):
+        if text.strip() == "" or file_name.strip() == "":
+            st.error("All fields are required")
 
-    if text.strip() == "" or file_name.strip() == "":
-        st.error("All fields are required")
+        else:
+            img_bytes = qr.note_qr_code(text)
 
-    else:
-        img_bytes = qr.note_qr_code(text)
+            st.image(img_bytes)
 
-        st.image(img_bytes)
-
-        st.download_button(
-            "Download QR",
-            data=img_bytes,
-            file_name=f"{file_name}.png",
-            mime="image/png"
-        )
+            st.download_button(
+                "Download QR",
+                data=img_bytes,
+                file_name=f"{file_name}.png",
+                mime="image/png"
+            )
 
 ########################################################
 # UPI QR
 
-st.markdown("### Generate UPI Payment QR")
+with tab2:
 
-upi_id = st.text_input("Enter UPI ID")
-payer_name = st.text_input("Enter receiver name")
-amount = st.text_input("Enter amount")
+    st.markdown("### Generate UPI Payment QR")
 
-currency = st.selectbox(
-    "Currency",
-    ["INR","USD","EUR","GBP","JPY","CNY","AUD","CAD","CHF","SGD"]
-)
+    upi_id = st.text_input("Enter UPI ID")
+    payer_name = st.text_input("Enter receiver name")
+    amount = st.text_input("Enter amount")
 
-if st.button("Generate UPI QR"):
+    currency = st.selectbox(
+        "Currency",
+        ["INR","USD","EUR","GBP","JPY","CNY","AUD","CAD","CHF","SGD"]
+    )
 
-    if upi_id.strip()=="" or payer_name.strip()=="" or amount.strip()=="" or file_name.strip()=="":
-        st.error("All fields are required")
+    if st.button("Generate UPI QR"):
 
-    else:
-        img_bytes = qr.upi_qr_code(upi_id, payer_name, amount, currency)
+        if upi_id.strip()=="" or payer_name.strip()=="" or amount.strip()=="" or file_name.strip()=="":
+            st.error("All fields are required")
 
-        st.image(img_bytes)
+        else:
+            img_bytes = qr.upi_qr_code(upi_id, payer_name, amount, currency)
 
-        st.download_button(
-            "Download QR",
-            data=img_bytes,
-            file_name=f"{file_name}.png",
-            mime="image/png"
-        )
+            st.image(img_bytes)
+
+            st.download_button(
+                "Download QR",
+                data=img_bytes,
+                file_name=f"{file_name}.png",
+                mime="image/png"
+            )
 
 ########################################################
 # PHONE QR
+with tab3:
+    st.markdown("### Generate Phone Number QR")
 
-st.markdown("### Generate Phone Number QR")
+    phone = st.text_input("Enter phone number")
 
-phone = st.text_input("Enter phone number")
+    if st.button("Generate Phone QR"):
 
-if st.button("Generate Phone QR"):
+        if phone.strip()=="" or file_name.strip()=="":
+            st.error("All fields are required")
 
-    if phone.strip()=="" or file_name.strip()=="":
-        st.error("All fields are required")
+        else:
+            img_bytes = qr.phone_number_qr_code(phone)
 
-    else:
-        img_bytes = qr.phone_number_qr_code(phone)
+            st.image(img_bytes)
 
-        st.image(img_bytes)
-
-        st.download_button(
-            "Download QR",
-            data=img_bytes,
-            file_name=f"{file_name}.png",
-            mime="image/png"
-        )
+            st.download_button(
+                "Download QR",
+                data=img_bytes,
+                file_name=f"{file_name}.png",
+                mime="image/png"
+            )
 
 ########################################################
 # WHATSAPP QR
+with tab4:
+    st.markdown("### Generate WhatsApp QR Code")
 
-st.markdown("### Generate WhatsApp QR Code")
+    wa_number = st.text_input("Enter WhatsApp number (country code required)")
+    wa_message = st.text_input("Enter message")
 
-wa_number = st.text_input("Enter WhatsApp number (country code required)")
-wa_message = st.text_input("Enter message")
+    if st.button("Generate WhatsApp QR"):
 
-if st.button("Generate WhatsApp QR"):
+        if wa_number.strip()=="" or wa_message.strip()=="" or file_name.strip()=="":
+            st.error("All fields are required")
 
-    if wa_number.strip()=="" or wa_message.strip()=="" or file_name.strip()=="":
-        st.error("All fields are required")
+        else:
+            img_bytes = qr.wa_qr_code(wa_number, wa_message)
 
-    else:
-        img_bytes = qr.wa_qr_code(wa_number, wa_message)
+            st.image(img_bytes)
 
-        st.image(img_bytes)
-
-        st.download_button(
-            "Download QR",
-            data=img_bytes,
-            file_name=f"{file_name}.png",
-            mime="image/png"
-        )
+            st.download_button(
+                "Download QR",
+                data=img_bytes,
+                file_name=f"{file_name}.png",
+                mime="image/png"
+            )
 
 st.markdown("---")
 st.markdown(
