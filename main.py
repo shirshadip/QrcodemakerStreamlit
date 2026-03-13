@@ -18,18 +18,16 @@ if st.button("Generate Text QR"):
         st.error("All fields are required")
 
     else:
+        img_bytes = qr.note_qr_code(text)
 
-        path = qr.note_qr_code(text, file_name)
+        st.image(img_bytes)
 
-        st.image(path)
-
-        with open(path, "rb") as f:
-            st.download_button(
-                "Download QR",
-                data=f,
-                file_name=f"{file_name}.png",
-                mime="image/png"
-            )
+        st.download_button(
+            "Download QR",
+            data=img_bytes,
+            file_name=f"{file_name}.png",
+            mime="image/png"
+        )
 
 ########################################################
 # UPI QR
@@ -51,18 +49,16 @@ if st.button("Generate UPI QR"):
         st.error("All fields are required")
 
     else:
+        img_bytes = qr.upi_qr_code(upi_id, payer_name, amount, currency)
 
-        path = qr.upi_qr_code(upi_id, payer_name, amount, currency, file_name)
+        st.image(img_bytes)
 
-        st.image(path)
-
-        with open(path, "rb") as f:
-            st.download_button(
-                "Download QR",
-                data=f,
-                file_name=f"{file_name}.png",
-                mime="image/png"
-            )
+        st.download_button(
+            "Download QR",
+            data=img_bytes,
+            file_name=f"{file_name}.png",
+            mime="image/png"
+        )
 
 ########################################################
 # PHONE QR
@@ -77,42 +73,44 @@ if st.button("Generate Phone QR"):
         st.error("All fields are required")
 
     else:
+        img_bytes = qr.phone_number_qr_code(phone)
 
-        path = qr.phone_number_qr_code(phone, file_name)
+        st.image(img_bytes)
 
-        st.image(path)
+        st.download_button(
+            "Download QR",
+            data=img_bytes,
+            file_name=f"{file_name}.png",
+            mime="image/png"
+        )
 
-        with open(path, "rb") as f:
-            st.download_button(
-                "Download QR",
-                data=f,
-                file_name=f"{file_name}.png",
-                mime="image/png"
-            )
-###################################################################
-# whatsapp QR code
+########################################################
+# WHATSAPP QR
+
 st.markdown("### Generate WhatsApp QR Code")
 
-wa_number = st.text_input("Enter WhatsApp number (with country code)")
-wa_message = st.text_input("Enter message to prefill")
+wa_number = st.text_input("Enter WhatsApp number (country code required)")
+wa_message = st.text_input("Enter message")
 
 if st.button("Generate WhatsApp QR"):
 
-    if wa_number.strip() == "" or wa_message.strip() == "" or file_name.strip() == "":
+    if wa_number.strip()=="" or wa_message.strip()=="" or file_name.strip()=="":
         st.error("All fields are required")
 
     else:
+        img_bytes = qr.wa_qr_code(wa_number, wa_message)
 
-        path = qr.wa_qr_code(wa_number, wa_message, file_name)
+        st.image(img_bytes)
 
-        st.image(path)
+        st.download_button(
+            "Download QR",
+            data=img_bytes,
+            file_name=f"{file_name}.png",
+            mime="image/png"
+        )
 
-        with open(path, "rb") as f:
-            st.download_button(
-                "Download QR",
-                data=f,
-                file_name=f"{file_name}.png",
-                mime="image/png"
-            )
-st.markdown("""---""")
-st.markdown("""<p>&copy Made with love and code by shirshadip,2026</p>""",unsafe_allow_html=True)
+st.markdown("---")
+st.markdown(
+    "<p style='text-align:center'>© Made with love and code by Shirshadip, 2026</p>",
+    unsafe_allow_html=True
+)

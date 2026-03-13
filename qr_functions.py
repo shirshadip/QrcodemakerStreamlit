@@ -1,34 +1,30 @@
 import qrcode
+from io import BytesIO
 
-def note_qr_code(data, file_name):
+
+def generate_qr(data):
     img = qrcode.make(data)
-    path = f"{file_name}.png"
-    img.save(path)
-    return path
+
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+
+    return buffer.getvalue()
 
 
-def upi_qr_code(upi_id, name, amount, currency, file_name):
+def note_qr_code(data):
+    return generate_qr(data)
+
+
+def upi_qr_code(upi_id, name, amount, currency):
     upi_link = f"upi://pay?pa={upi_id}&pn={name}&am={amount}&cu={currency}"
-    img = qrcode.make(upi_link)
-    path = f"{file_name}.png"
-    img.save(path)
-    return path
+    return generate_qr(upi_link)
 
 
-def phone_number_qr_code(number, file_name):
+def phone_number_qr_code(number):
     phone = "tel:" + number
-    img = qrcode.make(phone)
-    path = f"{file_name}.png"
-    img.save(path)
-    return path
-import qrcode
+    return generate_qr(phone)
 
-def wa_qr_code(data, text, file_name):
-    link = f"https://wa.me/{data}?text={text}"
-    img = qrcode.make(link)
 
-    path = f"{file_name}.png"
-
-    img.save(path)
-
-    return path
+def wa_qr_code(number, text):
+    link = f"https://wa.me/{number}?text={text}"
+    return generate_qr(link)
