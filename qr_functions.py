@@ -15,9 +15,12 @@ def note_qr_code(data):
     return generate_qr(data)
 
 
-def upi_qr_code(upi_id, name, amount, currency, note=""):
+def upi_qr_code(upi_id, name, amount="", currency="INR", note=""):
 
-    link = f"upi://pay?pa={upi_id}&pn={name}&am={amount}&cu={currency}"
+    link = f"upi://pay?pa={upi_id}&pn={name}&cu={currency}"
+
+    if amount:
+        link += f"&am={amount}"
 
     if note:
         link += f"&tn={note}"

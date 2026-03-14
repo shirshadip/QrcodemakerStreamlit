@@ -57,7 +57,7 @@ with tab2:
 
     upi_id = st.text_input("Enter UPI ID")
     payer_name = st.text_input("Enter receiver name")
-    amount = st.text_input("Enter amount")
+    amount = st.text_input("Enter amount (optional)")
     note = st.text_area("Enter a note (optional)")
 
     currency = st.selectbox(
@@ -67,18 +67,18 @@ with tab2:
 
     if st.button("Generate UPI QR"):
 
-        if upi_id.strip()=="" or payer_name.strip()=="" or amount.strip()=="" or file_name.strip()=="":
-            st.error("All required fields must be filled")
+        if upi_id.strip()=="" or payer_name.strip()=="" or file_name.strip()=="":
+            st.error("UPI ID, Receiver name and file name are required")
 
         else:
 
-            # If note is empty, make it blank
+            amount_value = amount.strip() if amount.strip() else ""
             note_value = note.strip() if note.strip() else ""
 
             img_bytes = qr.upi_qr_code(
                 upi_id,
                 payer_name,
-                amount,
+                amount_value,
                 currency,
                 note_value
             )
