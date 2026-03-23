@@ -240,8 +240,9 @@ with tab8:
                 mime="image/png"
             )
 
+
 st.markdown("---")
 st.markdown(
-    "<p style='text-align:center'>© Made with love and code by Shirshadip, 2026</p>",
+    "<p style='text-align:center'>© Made with love and code by Shirshadip,2026</p>",
     unsafe_allow_html=True
 )
